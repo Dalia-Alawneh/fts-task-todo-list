@@ -1,1 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
+
+@utility poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+@utility poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+@utility poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@utility poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@utility poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@utility poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+@utility poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@utility poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+@utility poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+
+@theme {
+  --color-main: #8FBCB4;
+  --color-cynlight: #4EE9E0;
+  --color-primarygreen: #027E47;
+  --color-main-dark: #3c504c;
+  --color-secondary: #FF6767;
+  --color-secondary-dark: #c54f4f;
+}
+
+body {
+  @apply poppins-regular
+}
+
+a {
+  @apply poppins-medium text-base
+}
+
+.link-styled {
+  @apply block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-main md:p-0 dark:text-white md:dark:hover:text-main dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent
+}
+
+.secondary-btn {
+  @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors
+}
