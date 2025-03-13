@@ -80,3 +80,7 @@ a {
 .secondary-btn {
   @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors
 }
+
+body{
+  height: 4000px;
+}

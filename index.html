@@ -8,7 +8,9 @@
   <link rel="icon" type="image/x-icon" href="assets/plany-logo.webp">
 
   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="dist/output.css">
 </head>
 
@@ -69,7 +71,47 @@
     </div>
   </nav>
 
+  <header class="">
+    <div
+      class="h-[50vh] w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto py-4 px-4 sm:px-16">
+      <div class="img h-full ">
+        <img class="object-cover h-full rounded-2xl" src="assets/home/headerbg.webp" alt="Plany thumbnail">
+      </div>
+
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 items-center w-full bg-white rounded-2xl shadow-sm dark:bg-gray-800 p-4 md:p-6">
+        <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
+          <div class="flex flex-col gap-3">
+            <dl class="bg-orange-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
+              <dt id="todo"
+                class="w-8 h-8 rounded-full bg-orange-100 dark:bg-gray-500 text-orange-600 dark:text-orange-300 text-sm font-medium flex items-center justify-center mb-1">
+                ...</dt>
+              <dd class="text-orange-600 dark:text-orange-300 text-sm font-medium">To do</dd>
+            </dl>
+            <dl class="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
+              <dt id="done"
+                class="w-8 h-8 rounded-full bg-teal-100 dark:bg-gray-500 text-teal-600 dark:text-teal-300 text-sm font-medium flex items-center justify-center mb-1">
+                ...</dt>
+              <dd class="text-teal-600 dark:text-teal-300 text-sm font-medium">Done</dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Radial Chart -->
+        <div class="py-6" id="radial-chart"></div>
+      </div>
+    </div>
+
+
+  </header>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script src="src/js/helpers.js"></script>
+  <script src="vendor/js/charts.js"></script>
+  <script src="src/js/index.js"></script>
 </body>
 
 </html>
