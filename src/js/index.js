@@ -98,7 +98,7 @@ todoApp.generateTodos();
 document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
 document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
 
-const modal =  document.getElementById('crud-modal');
+const modal = document.getElementById('crud-modal');
 
 const toggleClasses = (el, toAdd = [], toRemove = []) => {
   el.classList.remove(...toRemove);
@@ -108,5 +108,30 @@ const toggleClasses = (el, toAdd = [], toRemove = []) => {
 const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
 const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
 
-document.getElementById('add-task').onclick = showModal
-document.getElementById('close-modal').onclick = hideModal
+document.getElementById('add-task').onclick = ()=>{
+  modal.setAttribute('aria-hidden', 'false');
+  showModal()
+}
+
+document.getElementById('close-modal').onclick = ()=>{
+  modal.setAttribute('aria-hidden', 'true');
+  hideModal()
+}
+
+const generateUsers = async () => {
+  const { users } = await getUsers();
+  document.getElementById('users').innerHTML = renderUsers(users);
+}
+
+const renderUsers = (users) => {
+  const renderOption = ({ id, firstName, lastName }) => {
+    return `<option value="${id}">${firstName} ${lastName}</option>`
+  }
+  if (!users || users.length === 0) {
+    return `<option disabled selected>No users found</option>`
+  } else {
+    return users.map(user => renderOption(user)).join('')
+  }
+}
+
+generateUsers()
