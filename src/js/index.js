@@ -48,19 +48,19 @@ const createTaskaty = (page = 1) => {
     updatePaginationButtons()
   };
 
-  const updatePaginationButtons = ()=>{
+  const updatePaginationButtons = () => {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
 
-    if(currentPage <= 1){
+    if (currentPage <= 1) {
       prevBtn.disabled = true;
-    }else{
+    } else {
       prevBtn.disabled = false;
     }
 
-    if(currentPage >= maxPage){
+    if (currentPage >= maxPage) {
       nextBtn.disabled = true;
-    }else{
+    } else {
       nextBtn.disabled = false;
     }
   }
@@ -72,7 +72,7 @@ const createTaskaty = (page = 1) => {
 
   const nextPage = () => {
     currentPage++;
-    if(currentPage <= maxPage){
+    if (currentPage <= maxPage) {
       generateTodos()
     }
   }
@@ -85,8 +85,8 @@ const createTaskaty = (page = 1) => {
   }
 
   return {
-    nextPage, 
-    previousPage, 
+    nextPage,
+    previousPage,
     generateTodos,
   }
 }
@@ -97,3 +97,13 @@ todoApp.generateTodos();
 
 document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
 document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
+
+const modal =  document.getElementById('crud-modal');
+document.getElementById('add-task').onclick = () => {
+  modal.classList.remove('hidden')
+  modal.classList.add('flex')
+}
+document.getElementById('close-modal').onclick = () => {
+  modal.classList.remove('flex')
+  modal.classList.add('hidden')
+}
