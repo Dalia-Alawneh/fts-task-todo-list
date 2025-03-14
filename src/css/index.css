@@ -90,3 +90,6 @@ a {
   @apply border border-secondary rounded-lg px-3 py-2 text-secondary hover:bg-secondary hover:text-white transition-colors duration-300
 }
 
+.pagination-btn{
+  @apply transition flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-main hover:bg-main-dark dark:bg-main dark:hover:bg-main-dark dark:hover:text-white disabled:bg-gray-400
+}
