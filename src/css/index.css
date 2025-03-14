@@ -60,9 +60,14 @@
   --color-main: #8FBCB4;
   --color-cynlight: #4EE9E0;
   --color-primarygreen: #027E47;
+  --color-done-light: #1aa26536;
+  --color-done: #1aa265;
+  --color-pending: #fc5757;
+  --color-pending-light: #ff67673d;
   --color-main-dark: #3c504c;
   --color-secondary: #FF6767;
   --color-secondary-dark: #c54f4f;
+  --shadow-done: 0 4px 4px #027e4745;
 }
 
 body {
@@ -81,6 +86,7 @@ a {
   @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors
 }
 
-body{
-  height: 4000px;
+.btn-outlined-secondary {
+  @apply border border-secondary rounded-lg px-3 py-2 text-secondary hover:bg-secondary hover:text-white transition-colors duration-300
 }
+
