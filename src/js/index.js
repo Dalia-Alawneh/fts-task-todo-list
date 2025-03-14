@@ -99,11 +99,14 @@ document.getElementById('next-btn').addEventListener('click', () => todoApp.next
 document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
 
 const modal =  document.getElementById('crud-modal');
-document.getElementById('add-task').onclick = () => {
-  modal.classList.remove('hidden')
-  modal.classList.add('flex')
-}
-document.getElementById('close-modal').onclick = () => {
-  modal.classList.remove('flex')
-  modal.classList.add('hidden')
-}
+
+const toggleClasses = (el, toAdd = [], toRemove = []) => {
+  el.classList.remove(...toRemove);
+  el.classList.add(...toAdd);
+};
+
+const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
+const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
+
+document.getElementById('add-task').onclick = showModal
+document.getElementById('close-modal').onclick = hideModal
