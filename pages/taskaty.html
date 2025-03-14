@@ -7,6 +7,7 @@
   <title>Plany | Taskaty</title>
   <link rel="icon" type="image/x-icon" href="../assets/home/plany-logo.webp">
 
+  <link rel="stylesheet" href="../vendor/css/Toast.min.css">
   <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
@@ -99,7 +100,7 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <form class="p-4 md:p-5">
+        <form class="p-4 md:p-5" id="add-task-form">
           <div class="grid gap-4 mb-4 grid-cols-2">
             <div class="col-span-2">
               <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -112,13 +113,13 @@
               <label for="status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
               <select id="status"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-main dark:focus:border-main">
-                <option value="false">To Do</option>
+                <option value="false" selected>To Do</option>
                 <option value="true">Done</option>
               </select>
             </div>
             <div class="col-span-2 sm:col-span-1">
-              <label for="users" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assign to</label>
-              <select id="users"
+              <label for="user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assign to</label>
+              <select id="user"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:border-main block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-main dark:focus:border-main">
                 <option value="false">...</option>
               </select>
@@ -126,7 +127,8 @@
 
           </div>
           <div class="flex justify-center mt-10">
-            <button type="submit" class="text-white inline-flex justify-center items-center secondary-btn">
+            <button id="saveTask" type="submit"
+              class="text-white inline-flex justify-center items-center secondary-btn">
               Save Task
             </button>
           </div>
@@ -182,7 +184,10 @@
 
 
   </main>
+
+  <script src="../vendor/js/Toast.min.js"></script>
   <script src="../src/js/helpers.js"></script>
+  <script src="../src/js/todo.js"></script>
   <script src="../src/js/index.js"></script>
 </body>
 

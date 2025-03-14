@@ -120,7 +120,7 @@ document.getElementById('close-modal').onclick = ()=>{
 
 const generateUsers = async () => {
   const { users } = await getUsers();
-  document.getElementById('users').innerHTML = renderUsers(users);
+  document.getElementById('user').innerHTML = renderUsers(users);
 }
 
 const renderUsers = (users) => {

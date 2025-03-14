@@ -1,10 +1,37 @@
 const API_URL = 'https://dummyjson.com'
 const getTodos = async (limit = 30, skip = 0) => {
-  const response = await fetch(`${API_URL}/todos?limit=${limit}&skip=${skip}`);
-  return await response.json();
+  try {
+    const response = await fetch(`${API_URL}/todos?limit=${limit}&skip=${skip}`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching todos:', error);
+    throw error;
+  }
+}
+
+const addTodo = async (body) => {
+  try {
+    const response = await fetch(`${API_URL}/todos/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding todo:', error);
+    throw error;
+  }
 }
 
 const getUsers = async () => {
-  const response = await fetch(`${API_URL}/users?limit=10`);
-  return await response.json();
+  try {
+    const response = await fetch(`${API_URL}/users?limit=10`);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw error;
+  }
 }
