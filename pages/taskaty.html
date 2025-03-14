@@ -73,7 +73,7 @@
 
   <header>
     <div class="max-w-screen-3xl rounded-3xl mx-auto py-10 px-4 sm:px-16 flex justify-between items-center">
-      <h1 class="text-xl sm:text-3xl font-semibold capitalize">start your day & be productive✌️</h1>
+      <h1 class="text-xl sm:text-3xl font-semibold capitalize dark:text-white">start your day & be productive✌️</h1>
       <button type="button" class="btn-outlined-secondary">
         <i class="fa-solid fa-plus"></i> Add Task</button>
     </div>
@@ -85,29 +85,29 @@
         <table class="w-full border-separate border-spacing-y-3 min-w-[600px]">
           <thead>
             <tr>
-              <th scope="col" class="pb-3 border-b border-gray-200">ID</th>
-              <th scope="col" class="pb-3 border-b border-gray-200">TODO Description</th>
-              <th scope="col" class="pb-3 border-b border-gray-200">User ID</th>
-              <th scope="col" class="pb-3 border-b border-gray-200">Status</th>
-              <th scope="col" class="pb-3 border-b border-gray-200">Actions</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">ID</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">TODO Description</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">User ID</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">Status</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">Actions</th>
             </tr>
           </thead>
           <tbody id="taskaty">
 
           </tbody>
 
-          <tfoot class=" bg-gray-200">
-            <tr class="pt-2 border-separate border-spacing-y-3">
-              <td class="py-3 px-4 mt-3"></td>
-              <td colspan="3">
+          <tfoot class="bg-gray-200 dark:bg-gray-700">
+            <tr class="pt-2 border-separate border-spacing-y-3 rounded-br-3xl">
+              <td class="rounded-bl-2xl"></td>
+              <td colspan="3" class="ps-8">
                 <span class="text-sm text-gray-700 dark:text-gray-400">
-                  Showing <span class="font-semibold text-gray-900 dark:text-white" id="current-page">1</span> to 
+                  Page <span class="font-semibold text-gray-900 dark:text-white" id="current-page">1</span> to 
                   <span class="font-semibold text-gray-900 dark:text-white" id="last-page">3</span> of 
                     <span class="font-semibold text-gray-900 dark:text-white" id="total">0</span> Entries
                 </span>
               </td>
-              <td colspan="3">
-                <div class="inline-flex py-3">
+              <td colspan="2" class="text-center rounded-br-2xl">
+                <div class="inline-flex py-3 pe-8 ">
                   <button id="prev-btn"
                     class="pagination-btn rounded-s">
                     Prev

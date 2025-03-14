@@ -5,10 +5,10 @@ const paginate = (page, limit = 10) => ({
 
 
 const renderTodoRow = (todo) => `
-  <tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl last:mb-0">
-    <td class="border-s-[6px] ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl">${todo.id}</td>
-    <td class="py-3 text-center ${todo.completed ? 'line-through' : ''}">${todo.todo}</td>
-    <td class="py-3 text-center">${todo.userId}</td>
+  <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
+    <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl">${todo.id}</td>
+    <td class="py-3 text-center truncate w-[900px] dark:text-white ${todo.completed ? 'line-through' : ''}">${todo.todo}</td>
+    <td class="py-3 text-center min-w-[100px] dark:text-white">${todo.userId}</td>
     <td class="py-3 text-center">
       ${todo.completed
     ? '<span class="bg-done-light py-1 px-2 rounded-full text-[12px] text-done">Completed</span>'
@@ -33,14 +33,15 @@ const renderTodos = (todos) => {
 };
 
 
-const createTaskaty = (page = 1, maxPage = 3) => {
+const createTaskaty = (page = 1) => {
   let currentPage = page;
-  const updateUI = (todos) => {
-    let totalPages = todos.length / 10;
+  let maxPage = 3;
+  const updateUI = (todos, total) => {
+    maxPage = Math.ceil(total / 10);
     const taskatyBody = document.getElementById('taskaty');
     taskatyBody.innerHTML = renderTodos(todos);
 
-    document.getElementById('total').innerHTML = todos.length;
+    document.getElementById('total').innerHTML = total;
     document.getElementById('current-page').innerHTML = currentPage;
     document.getElementById('last-page').innerHTML = maxPage;
 
@@ -65,8 +66,8 @@ const createTaskaty = (page = 1, maxPage = 3) => {
   }
   const generateTodos = async () => {
     const { limit, skip } = paginate(currentPage);
-    const { todos } = await getTodos(limit, skip);
-    updateUI(todos);
+    const { todos, total } = await getTodos(limit, skip);
+    updateUI(todos, total);
   };
 
   const nextPage = () => {
