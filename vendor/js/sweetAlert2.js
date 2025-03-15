@@ -21,7 +21,7 @@ const showConfirmationModal = async (id) => {
 
       swalDeleteConfirmation.fire({
         title: "Deleted!",
-        text: "Your file has been deleted.",
+        text: "Your TODO has been deleted.",
         icon: "success"
       });
     } else if (
@@ -29,7 +29,7 @@ const showConfirmationModal = async (id) => {
     ) {
       swalDeleteConfirmation.fire({
         title: "Cancelled",
-        text: "Your imaginary file is safe :)",
+        text: "Your imaginary TODO is safe :)",
         icon: "error"
       });
     }

@@ -7,7 +7,9 @@ const paginate = (page, limit = 10) => ({
 const renderTodoRow = (todo) => `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
     <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl">${todo.id}</td>
-    <td class="py-3 text-center truncate w-[900px] dark:text-white ${todo.completed ? 'line-through' : ''}">${todo.todo}</td>
+    <td class="editable-td py-3 text-center max-h-[50px] truncate w-[900px] dark:text-white ${todo.completed ? 'line-through' : ''}"><span class="editable-text border-2 border-transparent">${todo.todo}</span>
+      <input data-id="${todo.id}" class="editable-input hidden w-fit h-full text-center p-2 border-2 rounded border-transparent focus:outline-none focus:border-2 focus:border-main focus:ring-main" value="${todo.todo}" size="${todo.todo.length}" />
+    </td>
     <td class="py-3 text-center min-w-[100px] dark:text-white">${todo.userId}</td>
     <td class="py-3 text-center">
       ${todo.completed
@@ -55,6 +57,7 @@ const createTaskaty = (page = 1) => {
     </tr>`;
     } else {
       taskatyBody.innerHTML = renderTodos(todos);
+      addEditableEvents()
     }
 
     if (!isLoading) {
@@ -155,3 +158,5 @@ const renderUsers = (users) => {
 }
 
 generateUsers()
+
+
