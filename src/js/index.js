@@ -4,7 +4,10 @@ const paginate = (page, limit = 10) => ({
 })
 
 
-const renderTodoRow = (todo) => `
+const renderTodoRow = (todo) =>{
+  console.log(todo);
+  
+  return  `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
     <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl">${todo.id}</td>
     <td class="py-3 text-center truncate w-[900px] dark:text-white ${todo.completed ? 'line-through' : ''}">${todo.todo}</td>
@@ -23,9 +26,12 @@ const renderTodoRow = (todo) => `
       </button>
     </td>
   </tr>
-`;
+`
+};
 
 const renderTodos = (todos) => {
+  console.log(todos);
+  
   if (!todos || todos.length === 0) {
     return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks to Do</td></tr>`;
   }
@@ -36,16 +42,28 @@ const renderTodos = (todos) => {
 const createTaskaty = (page = 1) => {
   let currentPage = page;
   let maxPage = 3;
-  const updateUI = (todos, total) => {
+  const updateUI = (isLoading, todos, total) => {
     maxPage = Math.ceil(total / 10);
     const taskatyBody = document.getElementById('taskaty');
-    taskatyBody.innerHTML = renderTodos(todos);
+    if (isLoading) {
+      taskatyBody.innerHTML = `<tr>
+      <td colspan="5" class="text-center w-[900px] h-[580px] dark:text-white">
+        <div class="flex justify-center items-center h-full">
+          <div class="loader"></div>
+        </div>
+      </td>
+    </tr>`;
+    } else {
+      taskatyBody.innerHTML = renderTodos(todos);
+    }
 
-    document.getElementById('total').innerHTML = total;
-    document.getElementById('current-page').innerHTML = currentPage;
-    document.getElementById('last-page').innerHTML = maxPage;
+    if (!isLoading) {
+      document.getElementById('total').innerHTML = total;
+      document.getElementById('current-page').innerHTML = currentPage;
+      document.getElementById('last-page').innerHTML = maxPage;
 
-    updatePaginationButtons()
+      updatePaginationButtons();
+    }
   };
 
   const updatePaginationButtons = () => {
@@ -65,9 +83,11 @@ const createTaskaty = (page = 1) => {
     }
   }
   const generateTodos = async () => {
+    updateUI(true)
     const { limit, skip } = paginate(currentPage);
     const { todos, total } = await getTodos(limit, skip);
-    updateUI(todos, total);
+    setItemsToLocalStorage(TODO_KEY, todos)
+    updateUI(false, todos, total);
   };
 
   const nextPage = () => {
@@ -108,12 +128,12 @@ const toggleClasses = (el, toAdd = [], toRemove = []) => {
 const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
 const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
 
-document.getElementById('add-task').onclick = ()=>{
+document.getElementById('add-task').onclick = () => {
   modal.setAttribute('aria-hidden', 'false');
   showModal()
 }
 
-document.getElementById('close-modal').onclick = ()=>{
+document.getElementById('close-modal').onclick = () => {
   modal.setAttribute('aria-hidden', 'true');
   hideModal()
 }

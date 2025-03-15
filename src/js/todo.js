@@ -1,3 +1,4 @@
+const TODO_KEY = 'todos'
 const description = document.getElementById('description');
 const status = document.getElementById('status');
 const user = document.getElementById('user');
@@ -15,12 +16,14 @@ const isTodoInputValid = ({ todo }) => {
 
   return { valid: true }
 }
+
 addForm.onsubmit = async (e) => {
+  const todos = getItemsFromLocalStorage(TODO_KEY);
   saveTask.innerHTML = 'Saving ...'
   e.preventDefault();
   const newTask = {
     todo: description?.value.trim(),
-    completed: status?.value,
+    completed: status?.value === "true",
     userId: user?.value,
   };
 
@@ -35,6 +38,9 @@ addForm.onsubmit = async (e) => {
 
   try {
     const response = await addTodo(newTask);
+    const newTodos = [response, ...todos];
+    setItemsToLocalStorage(TODO_KEY, newTodos)
+    document.getElementById('taskaty').innerHTML = renderTodos(newTodos);
     new Toast({
       message: 'TODO Added Successfully ✅🚀',
       type: 'success'

@@ -150,9 +150,13 @@
               <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">Actions</th>
             </tr>
           </thead>
-          <tbody id="taskaty">
+          <tbody id="taskaty" class="min-h-[580px]">
             <tr>
-              <td colspan="5" class="text-center">No Tasks To Do !</td>
+              <td colspan="5" class="text-center dark:text-white">
+                <div class="flex justify-center items-center h-full">
+                  <div class="loader"></div>
+                </div>
+              </td>
             </tr>
           </tbody>
 
@@ -186,7 +190,8 @@
   </main>
 
   <script src="../vendor/js/Toast.min.js"></script>
-  <script src="../src/js/helpers.js"></script>
+  <script src="../src/js/helpers/api.js"></script>
+  <script src="../src/js/helpers/localstorage.js"></script>
   <script src="../src/js/todo.js"></script>
   <script src="../src/js/index.js"></script>
 </body>
