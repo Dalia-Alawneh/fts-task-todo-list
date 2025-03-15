@@ -18,9 +18,15 @@ const renderTodoRow = (todo) => `
       <button class="me-8">
         <i class="fa-regular fa-trash-can text-secondary hover:text-secondary-dark text-xl"></i>
       </button>
-      <button class="me-2">
-        <i class="fa-solid fa-circle-check text-primarygreen hover:text-main-dark text-xl"></i>
-      </button>
+      ${todo.completed ?
+    `<button title="Undone Task" class="me-2" id="undone-taks" onclick="updateTodoStatus(false, ${todo.id})">
+        <i class="fa-solid fa-circle-check text-primarygreen hover:text-main-dark text-xl"></i> 
+      </button>`
+    :
+    `<button title="Mark as Done" class="me-2" id="mark-done" onclick="updateTodoStatus(true, ${todo.id})">
+      <i class="fa-regular fa-circle text-primarygreen hover:text-main-dark text-xl"></i>
+      </button>`
+  }
     </td>
   </tr>
 `;

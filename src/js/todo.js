@@ -4,6 +4,7 @@ const status = document.getElementById('status');
 const user = document.getElementById('user');
 const addForm = document.getElementById('add-task-form')
 const saveTask = document.getElementById('saveTask')
+const markDone = document.getElementById('mark-done')
 
 const isTodoInputValid = ({ todo }) => {
   const trimmedTodo = todo.trim();
@@ -61,3 +62,37 @@ const updateTodoListUI = () => {
   const todos = getItemsFromLocalStorage(TODO_KEY);
   document.getElementById('taskaty').innerHTML = renderTodos(todos);
 };
+
+const updateTodoStatus = async (status, id) => {
+  const todos = getItemsFromLocalStorage(TODO_KEY);
+  const todo = todos.find(todo => todo.id === id);
+  const updatedTodo = { ...todo, completed: status, }
+  try {
+    // const response = await updateTodo(id, updatedTodo);
+    const todoIndex = todos.findIndex(todo => todo.id === id);
+    if (todoIndex !== -1) {
+      todos[todoIndex] = updatedTodo;
+    }
+    setItemsToLocalStorage(TODO_KEY, todos);
+    updateTodoListUI()
+    if(status){
+      new Toast({
+        message: '✅ TODO Completed Good Job!🦾😎',
+        type: 'success'
+      });
+    }else{
+      new Toast({
+        message: '😵‍💫Task marked as incomplete.You got this!🫡',
+        type: 'success'
+      });
+    }
+  } catch (e) {
+    new Toast({
+      message: e.message,
+      type: 'danger'
+    });
+  }
+
+}
+
+
