@@ -15,7 +15,7 @@ const renderTodoRow = (todo) => `
     : '<span class="bg-pending-light py-1 px-2 rounded-full text-[12px] text-pending">Pending</span>'}
     </td>
     <td class="py-3 text-center rounded-e-2xl gap-8 items-center justify-center">
-      <button class="me-8">
+      <button class="me-8" onclick="deleteTodoItem(${todo.id})">
         <i class="fa-regular fa-trash-can text-secondary hover:text-secondary-dark text-xl"></i>
       </button>
       ${todo.completed ?

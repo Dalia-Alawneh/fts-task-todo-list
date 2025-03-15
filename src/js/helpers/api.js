@@ -43,6 +43,20 @@ const updateTodo = async (id, body) => {
   }
 }
 
+const deleteTodo = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/todos/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating todo:', error);
+    throw error;
+  }
+}
+
 const getUsers = async () => {
   try {
     const response = await fetch(`${API_URL}/users?limit=10`);

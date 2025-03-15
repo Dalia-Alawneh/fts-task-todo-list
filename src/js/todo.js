@@ -75,12 +75,12 @@ const updateTodoStatus = async (status, id) => {
     }
     setItemsToLocalStorage(TODO_KEY, todos);
     updateTodoListUI()
-    if(status){
+    if (status) {
       new Toast({
         message: '✅ TODO Completed Good Job!🦾😎',
         type: 'success'
       });
-    }else{
+    } else {
       new Toast({
         message: '😵‍💫Task marked as incomplete.You got this!🫡',
         type: 'success'
@@ -95,4 +95,22 @@ const updateTodoStatus = async (status, id) => {
 
 }
 
+const deleteTodoItem = async (id) => {
+  const todos = getItemsFromLocalStorage(TODO_KEY);
+  try {
+    await deleteTodo(id);
+    const updatedTodos = todos.filter(todo => todo.id !== id)
+    setItemsToLocalStorage(TODO_KEY, updatedTodos);
+    updateTodoListUI()
+    new Toast({
+      message: '✅ TODO Deleted Successfully!',
+      type: 'success'
+    });
+  } catch (e) {
+    new Toast({
+      message: e.message,
+      type: 'danger'
+    });
+  }
+}
 
