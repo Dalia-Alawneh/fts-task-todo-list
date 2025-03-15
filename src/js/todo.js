@@ -64,58 +64,49 @@ const updateTodoListUI = () => {
   addEditableEvents();
 };
 
+
+const updateTodoItem = async (id, updatedTodo, successMessage) => {
+  const todos = getItemsFromLocalStorage(TODO_KEY);
+  const todoIndex = todos.findIndex(todo => todo.id === id);
+  if (todoIndex == -1) {
+    new Toast({
+      message: `TODO not found!`,
+      type: 'danger'
+    });
+    return;
+  }
+  try {
+    const response = await updateTodo(id, updatedTodo);
+    todos[todoIndex] = response;
+    setItemsToLocalStorage(TODO_KEY, todos);
+    updateTodoListUI()
+
+    if (successMessage) {
+      new Toast({
+        message: successMessage,
+        type: 'success'
+      });
+    }
+  } catch (e) {
+    new Toast({
+      message: e.message || 'Something went wrong!',
+      type: 'danger'
+    });
+  }
+
+}
+
 const updateTodoStatus = async (status, id) => {
-  const todos = getItemsFromLocalStorage(TODO_KEY);
-  try {
-    const response = await updateTodo(id, { completed: status });
-    const todoIndex = todos.findIndex(todo => todo.id === id);
-    if (todoIndex !== -1) {
-      todos[todoIndex] = response;
-    }
-    setItemsToLocalStorage(TODO_KEY, todos);
-    updateTodoListUI()
-    if (status) {
-      new Toast({
-        message: '✅ TODO Completed Good Job!🦾😎',
-        type: 'success'
-      });
-    } else {
-      new Toast({
-        message: '😵‍💫Task marked as incomplete.You got this!🫡',
-        type: 'success'
-      });
-    }
-  } catch (e) {
-    new Toast({
-      message: e.message,
-      type: 'danger'
-    });
-  }
+  const message = status
+    ? '✅ TODO Completed! Good Job!🦾😎'
+    : '😵‍💫 Task marked as incomplete. You got this!🫡';
 
+  updateTodoItem(id, { completed: status }, message);
 }
 
-const updateTodoDescription = async (description, id) => {
-  const todos = getItemsFromLocalStorage(TODO_KEY);
-  try {
-    const response = await updateTodo(id, { todo: description });
-    const todoIndex = todos.findIndex(todo => todo.id === id);
-    if (todoIndex !== -1) {
-      todos[todoIndex].todo = response.todo;
-    }
-    setItemsToLocalStorage(TODO_KEY, todos);
-    updateTodoListUI()
-    new Toast({
-      message: '✅ TODO Updated!',
-      type: 'success'
-    });
-  } catch (e) {
-    new Toast({
-      message: e.message,
-      type: 'danger'
-    });
-  }
-
-}
+const updateTodoDescription = (description, id) => {
+  updateTodoItem(id, { todo: description }, '✅ TODO Updated!');
+};
 
 const deleteTodoItem = async (id) => {
   const todos = getItemsFromLocalStorage(TODO_KEY);
