@@ -4,10 +4,7 @@ const paginate = (page, limit = 10) => ({
 })
 
 
-const renderTodoRow = (todo) =>{
-  console.log(todo);
-  
-  return  `
+const renderTodoRow = (todo) => `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
     <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl">${todo.id}</td>
     <td class="py-3 text-center truncate w-[900px] dark:text-white ${todo.completed ? 'line-through' : ''}">${todo.todo}</td>
@@ -26,12 +23,9 @@ const renderTodoRow = (todo) =>{
       </button>
     </td>
   </tr>
-`
-};
+`;
 
 const renderTodos = (todos) => {
-  console.log(todos);
-  
   if (!todos || todos.length === 0) {
     return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks to Do</td></tr>`;
   }

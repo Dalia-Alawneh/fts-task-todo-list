@@ -39,8 +39,8 @@ addForm.onsubmit = async (e) => {
   try {
     const response = await addTodo(newTask);
     const newTodos = [response, ...todos];
-    setItemsToLocalStorage(TODO_KEY, newTodos)
-    document.getElementById('taskaty').innerHTML = renderTodos(newTodos);
+    setItemsToLocalStorage(TODO_KEY, newTodos);
+    updateTodoListUI()
     new Toast({
       message: 'TODO Added Successfully ✅🚀',
       type: 'success'
@@ -56,3 +56,8 @@ addForm.onsubmit = async (e) => {
   }
   saveTask.innerHTML = 'Save Task'
 }
+
+const updateTodoListUI = () => {
+  const todos = getItemsFromLocalStorage(TODO_KEY);
+  document.getElementById('taskaty').innerHTML = renderTodos(todos);
+};
