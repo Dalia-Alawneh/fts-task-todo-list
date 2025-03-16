@@ -58,6 +58,7 @@ const createTaskaty = (page = 1) => {
         document.getElementById('total').innerHTML = total;
         document.getElementById('current-page').innerHTML = currentPage;
         document.getElementById('last-page').innerHTML = maxPage;
+        tfoot.classList.remove('hidden');
 
         updatePaginationButtons();
       }
