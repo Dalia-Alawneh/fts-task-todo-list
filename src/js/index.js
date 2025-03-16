@@ -37,6 +37,10 @@ themebtn.onclick = toggleTheme;
 const theme = localStorage.getItem(THEME_KEY);
 if(theme === 'dark'){
   document.documentElement.classList.add('dark')
+  moonIcon.classList.add('hidden')
+  sunIcon.classList.remove('hidden')
 }else{
+  moonIcon.classList.remove('hidden')
+  sunIcon.classList.add('hidden')
   document.documentElement.classList.remove('dark')
 }
