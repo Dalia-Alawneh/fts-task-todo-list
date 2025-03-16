@@ -250,6 +250,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-\[50\%\] {
+    top: 50%;
+  }
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
@@ -261,6 +264,9 @@
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
+  }
+  .left-\[50\%\] {
+    left: 50%;
   }
   .z-20 {
     z-index: 20;
@@ -357,6 +363,9 @@
   }
   .h-\[78px\] {
     height: 78px;
+  }
+  .h-\[500px\] {
+    height: 500px;
   }
   .h-\[580px\] {
     height: 580px;

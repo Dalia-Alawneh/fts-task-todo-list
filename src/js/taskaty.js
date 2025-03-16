@@ -1,5 +1,6 @@
 let searchResults = null;
 let currentTodos = [];
+const tfoot = document.querySelector('tfoot')
 
 const paginate = (page, limit = 10) => ({
   limit,
@@ -38,6 +39,7 @@ const renderTodoRow = (todo) => `
 
 const renderTodos = (todos) => {
   if (!todos || todos.length === 0) {
+    tfoot.classList.add('hidden')
     return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks Found!</td></tr>`;
   }
   return todos.map(renderTodoRow).join('');
@@ -50,159 +52,154 @@ const createTaskaty = (page = 1) => {
   const updateUI = (isLoading, total) => {
     maxPage = Math.ceil(total / 10);
     const taskatyBody = document.getElementById('taskaty');
-    if (isLoading) {
-      taskatyBody.innerHTML = `<tr>
-      <td colspan="5" class="text-center w-[900px] h-[580px] dark:text-white">
-        <div class="flex justify-center items-center h-full">
-          <div class="loader"></div>
-        </div>
-      </td>
-    </tr>`;
-    } else {
-      taskatyBody.innerHTML = renderTodos(currentTodos);
-      addEditableEvents()
+      if (!isLoading) {
+        taskatyBody.innerHTML = renderTodos(currentTodos);
+        addEditableEvents()
+        document.getElementById('total').innerHTML = total;
+        document.getElementById('current-page').innerHTML = currentPage;
+        document.getElementById('last-page').innerHTML = maxPage;
+
+        updatePaginationButtons();
+      }
+    };
+
+    const updatePaginationButtons = () => {
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      if (currentPage <= 1) {
+        prevBtn.disabled = true;
+      } else {
+        prevBtn.disabled = false;
+      }
+
+      if (currentPage >= maxPage) {
+        nextBtn.disabled = true;
+      } else {
+        nextBtn.disabled = false;
+      }
+    }
+    const generateTodos = async () => {
+      updateUI(true)
+      const { limit, skip } = paginate(currentPage);
+      const { todos, total } = await getTodos(limit, skip);
+      currentTodos = searchResults ?? todos;
+      setItemsToLocalStorage(TODO_KEY, currentTodos)
+      updateUI(false, total);
+    };
+
+    const nextPage = () => {
+      currentPage++;
+      if (currentPage <= maxPage) {
+        generateTodos()
+      }
     }
 
-    if (!isLoading) {
-      document.getElementById('total').innerHTML = total;
-      document.getElementById('current-page').innerHTML = currentPage;
-      document.getElementById('last-page').innerHTML = maxPage;
-
-      updatePaginationButtons();
-    }
-  };
-
-  const updatePaginationButtons = () => {
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-
-    if (currentPage <= 1) {
-      prevBtn.disabled = true;
-    } else {
-      prevBtn.disabled = false;
+    const previousPage = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        generateTodos();
+      }
     }
 
-    if (currentPage >= maxPage) {
-      nextBtn.disabled = true;
-    } else {
-      nextBtn.disabled = false;
-    }
-  }
-  const generateTodos = async () => {
-    updateUI(true)
-    const { limit, skip } = paginate(currentPage);
-    const { todos, total } = await getTodos(limit, skip);
-    currentTodos = searchResults?? todos;
-    setItemsToLocalStorage(TODO_KEY, currentTodos)
-    updateUI(false, total);
-  };
-
-  const nextPage = () => {
-    currentPage++;
-    if (currentPage <= maxPage) {
-      generateTodos()
+    return {
+      nextPage,
+      previousPage,
+      generateTodos,
     }
   }
 
-  const previousPage = () => {
-    if (currentPage > 1) {
-      currentPage--;
-      generateTodos();
-    }
-  }
-  
-  return {
-    nextPage,
-    previousPage,
-    generateTodos,
-  }
-}
-
-const todoApp = createTaskaty();
-todoApp.generateTodos();
-
-
-document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
-document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
-
-const modal = document.getElementById('crud-modal');
-
-const toggleClasses = (el, toAdd = [], toRemove = []) => {
-  el.classList.remove(...toRemove);
-  el.classList.add(...toAdd);
-};
-
-const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
-const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
-
-document.getElementById('add-task').onclick = () => {
-  modal.setAttribute('aria-hidden', 'false');
-  showModal()
-}
-
-document.getElementById('close-modal').onclick = () => {
-  modal.setAttribute('aria-hidden', 'true');
-  hideModal()
-}
-
-const generateUsers = async () => {
-  const { users } = await getUsers();
-  document.getElementById('user').innerHTML = renderUsers(users);
-}
-
-const renderUsers = (users) => {
-  const renderOption = ({ id, firstName, lastName }) => {
-    return `<option value="${id}">${firstName} ${lastName}</option>`
-  }
-  if (!users || users.length === 0) {
-    return `<option disabled selected>No users found</option>`
-  } else {
-    return users.map(user => renderOption(user)).join('')
-  }
-}
-
-generateUsers()
-
-
-
-const getAllTodos = async () => {
-  try {
-    const { todos } = await getTodos(MAX_LIMIT);
-    return todos;
-  } catch (e) {
-    console.error(e.message);
-  }
-}
-
-
-const search = async (event) => {
-  const value = event.target?.value.trim();
-  if (value) {
-    searchResults = currentTodos.filter((todo) =>
-      todo.todo.toLowerCase().includes(value.toLowerCase())
-    );
-  } else {
-    searchResults = null;
-  }
-  currentPage = 1;
+  const todoApp = createTaskaty();
   todoApp.generateTodos();
-};
 
-const debounce = (func, delay = 500) => {
-  let currentTimeout
 
-  return function (args) {
-    clearTimeout(currentTimeout)
-    currentTimeout = setTimeout(() => {
-      func(args)
-    }, delay)
+  document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
+  document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
+
+  const modal = document.getElementById('crud-modal');
+
+  const toggleClasses = (el, toAdd = [], toRemove = []) => {
+    el.classList.remove(...toRemove);
+    el.classList.add(...toAdd);
+  };
+
+  const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
+  const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
+
+  document.getElementById('add-task').onclick = () => {
+    modal.setAttribute('aria-hidden', 'false');
+    showModal()
   }
-}
+
+  document.getElementById('close-modal').onclick = () => {
+    modal.setAttribute('aria-hidden', 'true');
+    hideModal()
+  }
+
+  const generateUsers = async () => {
+    const { users } = await getUsers();
+    document.getElementById('user').innerHTML = renderUsers(users);
+  }
+
+  const renderUsers = (users) => {
+    const renderOption = ({ id, firstName, lastName }) => {
+      return `<option value="${id}">${firstName} ${lastName}</option>`
+    }
+    if (!users || users.length === 0) {
+      return `<option disabled selected>No users found</option>`
+    } else {
+      return users.map(user => renderOption(user)).join('')
+    }
+  }
+
+  generateUsers()
 
 
-const inputDebounce = debounce(search, 500)
-document.querySelector('#search').addEventListener('input', (e)=>{
-  document.querySelector('tfoot').classList.add('hidden')
-  inputDebounce(e)
-  document.querySelector('tfoot').classList.remove('hidden')
-})
+
+  const getAllTodos = async () => {
+    try {
+      const { todos } = await getTodos(MAX_LIMIT);
+      return todos;
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+
+
+  const search = async (event) => {
+    const value = event.target?.value.trim();
+    if (value) {
+      searchResults = currentTodos.filter((todo) =>
+        todo.todo.toLowerCase().includes(value.toLowerCase())
+      );
+    } else {
+      searchResults = null;
+    }
+    currentPage = 1;
+    todoApp.generateTodos();
+  };
+
+  const debounce = (func, delay = 500) => {
+    let currentTimeout
+
+    return function (args) {
+      clearTimeout(currentTimeout)
+      currentTimeout = setTimeout(() => {
+        func(args)
+      }, delay)
+    }
+  }
+
+
+  const inputDebounce = debounce((e) => {
+    if (e.target.value.trim() === '') {
+      tfoot.classList.remove('hidden');
+    } else {
+      tfoot.classList.add('hidden');
+    }
+    search(e);
+  }, 500);
+
+  document.querySelector('#search').addEventListener('input', (e) => {
+    inputDebounce(e);
+  });
