@@ -5,7 +5,6 @@ const renderTodoCard = ({ todo, completed }) => {
   const status = completed ? 'done' : 'pending';
 
   const borderColor = `var(--color-${status})`;
-  const shadowColor = `var(--shadow-${status})`;
   const textColor = `var(--color-${status})`;
 
   return `
@@ -25,22 +24,20 @@ const renderTodoCard = ({ todo, completed }) => {
   `;
 };
 
-const showTopTodos = async (status) => {
-  const { todos } = await getTodos(8, 244);
-  completedTodos = todos.filter(todo => todo.completed === status)
-  return completedTodos.map(todo => renderTodoCard(todo)).join('');
+const renderTopTodos = (todos) => {
+
+  return todos.map(todo => renderTodoCard(todo)).join('');
 }
 
 const renderCompletedTodos = async () => {
   const todos = await showTopTodos(true)
-  topCompleted.innerHTML = todos
+  topCompleted.innerHTML = renderTopTodos(todos)
 }
 
 const renderPendingTodos = async () => {
   const todos = await showTopTodos(false)
-  topPending.innerHTML = todos
+  topPending.innerHTML = renderTopTodos(todos)
 }
-
 
 renderCompletedTodos()
 

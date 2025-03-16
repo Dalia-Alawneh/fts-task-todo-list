@@ -40,7 +40,7 @@ const renderTodoRow = (todo) => `
 const renderTodos = (todos) => {
   if (!todos || todos.length === 0) {
     tfoot.classList.add('hidden')
-    return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks Found!</td></tr>`;
+    return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center dark:bg-gray-800 dark:text-white">No Tasks Found!</td></tr>`;
   }
   return todos.map(renderTodoRow).join('');
 };

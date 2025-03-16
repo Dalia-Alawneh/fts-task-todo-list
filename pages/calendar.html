@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plany | My Calendar</title>
+  <link rel="icon" type="image/x-icon" href="../assets/home/plany-logo.webp">
+
 
   <!-- Do not change the order of these dependencies, since some of them depend on others -->
   <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/dist/preact.min.js"></script>
@@ -17,52 +20,75 @@
   <script src="https://cdn.jsdelivr.net/npm/@schedule-x/drag-and-drop@2.2.0/dist/core.umd.js"></script>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@schedule-x/theme-default@2.2.0/dist/index.css">
+
+
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../dist/output.css">
 </head>
 
-<body>
-  <div class="calendar"></div>
+<body class="dark:bg-gray-900">
+  <nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <div class="max-w-screen-3xl flex flex-wrap items-center justify-between mx-auto py-4 px-4 sm:px-16">
+      <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="../assets/home/plany-logo.webp" class="h-8" alt="Plany Logo" />
+        <span class="self-center text-2xl whitespace-nowrap dark:text-white poppins-bold text-main-dark">Plany</span>
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
 
-  <script type="module">
-    const { createCalendar, viewWeek } = window.SXCalendar;
-    const { createDragAndDropPlugin } = window.SXDragAndDrop;
 
-    const plugins = [
-      createDragAndDropPlugin(),
-    ]
+      <div class="hidden w-full md:block md:w-auto order-1 lg:order-2" id="navbar-default">
+        <ul
+          class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li class="flex items-center">
+            <a href="/" class="link-styled">Home</a>
+          </li>
+          <li class="flex items-center">
+            <a href="taskaty.html" class="link-styled">Taskaty</a>
+          </li>
+          <li class="flex items-center gap-8 ms-3 md:ms-0">
+            <a href="" class="secondary-btn"><i class="fa-regular fa-calendar-days"></i></a>
+            <div class="flex flex-col items-stretch">
+              <span id="day" class="dark:text-white">..</span>
+              <span class="text-secondary text-sm" id="date">...</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    const calendar = createCalendar({
-      views: [viewWeek],
-      events: [
-        {
-          id: '1',
-          title: 'Event 1',
-          start: '2025-03-15 09:00',
-          end: '2025-03-15 10:00'
-        },
-        {
-          id: '2',
-          title: 'Event 2',
-          start: '2025-03-18 11:00',
-          end: '2025-03-18 13:00'
-        },
-        {
-          id: '2',
-          title: 'Event 2',
-          start: '2025-03-18 11:00',
-          
-          end: '2025-03-18 13:00'
-        },
-        {
-          id: '2',
-          title: 'Event 2',
-          start: '2025-03-18 11:00',
-          end: '2025-03-18 13:00'
-        },
-      ],
-    }, plugins)
+  <div class="group">
+    <button title="Change Theme"
+      class="theme animate-bounce group-hover:animate-none w-12 h-12 bg-main fixed z-50 rounded-full right-10 flex justify-center items-center shadow-theme hover:bg-cynlight transition duration-700">
+      <span class="sun"><i class="sun text-2xl fa-regular fa-sun text-white"></i></span>
+      <span class="moon hidden"><i class="hidden text-2xl fa-solid fa-moon text-white"></i></span>
+    </button>
+  </div>
+  <main>
+    <div class="h-auto w-full max-w-screen-3xl rounded-3xl mx-auto py-4 px-4 sm:px-16">
+      <div class="calendar dark:bg-gray-900"></div>
+    </div>
 
-    calendar.render(document.querySelector('.calendar'))
-  </script>
+  </main>
+
+  
+  <script type="module" src="../src/js/calendar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script src="../src/js/helpers/topTodos.js"></script>
+  <script src="../src/js/helpers/api.js"></script>
+  <script src="../src/js/helpers/localstorage.js"></script>
+  <script src="../src/js/index.js"></script>
 </body>
 
 </html>
