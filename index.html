@@ -65,7 +65,7 @@
     <div
       class="h-auto w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto py-4 px-4 sm:px-16">
       <div class="img h-full ">
-        <img class="object-cover rounded-2xl w-full" src="assets/home/headerbg.webp" alt="Plany thumbnail">
+        <img class="object-cover rounded-2xl h-full" src="assets/home/headerbg.webp" alt="Plany thumbnail">
       </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 items-center w-full bg-white rounded-2xl shadow-sm dark:bg-gray-800 p-4 md:p-6">
@@ -92,37 +92,28 @@
     </div>
   </header>
   <main>
-    <section class="top-completed">
+    <section>
       <div
         class="w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto pb-5 px-4 sm:px-16">
-
-        <div class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
-          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-gray-400 fa-solid fa-calendar-check"></i> <span class="ps-1">Top Completed TODOs</span></h2>
-          <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="top-completed" class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
+          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-primarygreen fa-solid fa-calendar-check"></i> <span class="ps-1">Top Completed TODOs</span></h2>
+          <div class="todos grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <div class="todo-card border-2 border-primarygreen shadow-card-done rounded-xl p-4 flex flex-col items-stretch justify-between">
-              <h2
-                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-primarygreen before:rounded-full before:relative before:top-0.5">
-                <span class="ps-1">Top Completed TODOs</span>
-              </h2>
-              <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
-              <span class="text-primarygreen dark:text-done text-xs"><i class="fa-solid fa-check"></i> Completed </span>
-            </div>
           </div>
         </div>
-        <div class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
-          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-gray-400 fa-solid fa-hourglass-half"></i> <span class="ps-1">Pending TODOs</span></h2>
-          <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="top-pending" class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
+          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-pending fa-solid fa-hourglass-half"></i> <span class="ps-1">Pending TODOs</span></h2>
+          <div class="todos grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            <div class="todo-card border-2 border-secondary-dark rounded-xl p-4 shadow-pending flex flex-col items-stretch justify-between">
+            <div class="todo-card border-2 border-pending-dark rounded-xl p-4 shadow-pending flex flex-col items-stretch justify-between">
               <h2
-                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-secondary before:rounded-full before:relative before:top-0.5">
+                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-pending before:rounded-full before:relative before:top-0.5">
                 <span class="ps-1">TODOs</span>
               </h2>
               <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
-              <span class="text-secondary dark:text-secondary-dark text-xs"><i class="fa-solid fa-check"></i> Pending </span>
+              <span class="text-pending dark:text-pending text-xs"><i class="fa-solid fa-check"></i> Pending </span>
             </div>
-            <div class="todo-card border-2 border-secondary-dark rounded-xl p-4 shadow-pending">
+            <div class="todo-card border-2 border-pending rounded-xl p-4 shadow-pending">
               <h2
                 class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-primarygreen before:rounded-full before:relative before:top-0.5">
                 <span class="ps-1">Top Completed TODOs</span>
@@ -141,6 +132,7 @@
   <script src="../src/js/helpers/api.js"></script>
   <script src="../src/js/helpers/localstorage.js"></script>
   <script src="vendor/js/charts.js"></script>
+  <script src="src/js/dashboardTodos.js"></script>
   <script src="src/js/index.js"></script>
 </body>
 
