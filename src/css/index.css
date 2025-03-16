@@ -118,3 +118,19 @@ a {
   animation: l3 1s infinite linear;
 }
 @keyframes l3 {to{transform: rotate(1turn)}}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8FBCB4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #63817c;
+}
