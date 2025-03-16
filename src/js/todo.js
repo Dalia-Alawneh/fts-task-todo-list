@@ -1,4 +1,5 @@
 const TODO_KEY = 'todos'
+const MAX_LIMIT = 245;
 const description = document.getElementById('description');
 const status = document.getElementById('status');
 const user = document.getElementById('user');

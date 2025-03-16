@@ -1,3 +1,6 @@
+let searchResults = null;
+let currentTodos = [];
+
 const paginate = (page, limit = 10) => ({
   limit,
   skip: (page - 1) * limit
@@ -35,7 +38,7 @@ const renderTodoRow = (todo) => `
 
 const renderTodos = (todos) => {
   if (!todos || todos.length === 0) {
-    return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks to Do</td></tr>`;
+    return `<tr class="odd:bg-gray-100 even:bg-gray-50 rounded-2xl"><td colspan="5" class="py-3 text-center">No Tasks Found!</td></tr>`;
   }
   return todos.map(renderTodoRow).join('');
 };
@@ -44,7 +47,7 @@ const renderTodos = (todos) => {
 const createTaskaty = (page = 1) => {
   let currentPage = page;
   let maxPage = 3;
-  const updateUI = (isLoading, todos, total) => {
+  const updateUI = (isLoading, total) => {
     maxPage = Math.ceil(total / 10);
     const taskatyBody = document.getElementById('taskaty');
     if (isLoading) {
@@ -56,7 +59,7 @@ const createTaskaty = (page = 1) => {
       </td>
     </tr>`;
     } else {
-      taskatyBody.innerHTML = renderTodos(todos);
+      taskatyBody.innerHTML = renderTodos(currentTodos);
       addEditableEvents()
     }
 
@@ -89,8 +92,9 @@ const createTaskaty = (page = 1) => {
     updateUI(true)
     const { limit, skip } = paginate(currentPage);
     const { todos, total } = await getTodos(limit, skip);
-    setItemsToLocalStorage(TODO_KEY, todos)
-    updateUI(false, todos, total);
+    currentTodos = searchResults?? todos;
+    setItemsToLocalStorage(TODO_KEY, currentTodos)
+    updateUI(false, total);
   };
 
   const nextPage = () => {
@@ -106,7 +110,7 @@ const createTaskaty = (page = 1) => {
       generateTodos();
     }
   }
-
+  
   return {
     nextPage,
     previousPage,
@@ -160,3 +164,45 @@ const renderUsers = (users) => {
 generateUsers()
 
 
+
+const getAllTodos = async () => {
+  try {
+    const { todos } = await getTodos(MAX_LIMIT);
+    return todos;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+
+const search = async (event) => {
+  const value = event.target?.value.trim();
+  if (value) {
+    searchResults = currentTodos.filter((todo) =>
+      todo.todo.toLowerCase().includes(value.toLowerCase())
+    );
+  } else {
+    searchResults = null;
+  }
+  currentPage = 1;
+  todoApp.generateTodos();
+};
+
+const debounce = (func, delay = 500) => {
+  let currentTimeout
+
+  return function (args) {
+    clearTimeout(currentTimeout)
+    currentTimeout = setTimeout(() => {
+      func(args)
+    }, delay)
+  }
+}
+
+
+const inputDebounce = debounce(search, 500)
+document.querySelector('#search').addEventListener('input', (e)=>{
+  document.querySelector('tfoot').classList.add('hidden')
+  inputDebounce(e)
+  document.querySelector('tfoot').classList.remove('hidden')
+})
