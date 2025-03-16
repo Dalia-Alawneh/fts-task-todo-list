@@ -10,15 +10,15 @@ const renderTodoCard = ({ todo, completed }) => {
 
   return `
     <div 
-      class="todo-card border-2 rounded-xl p-4 flex flex-col items-stretch justify-between"
-      style="border-color: ${borderColor}; box-shadow: ${shadowColor};">
+      class="todo-card border-2 rounded-xl p-4 flex flex-col items-stretch justify-between shadow-${status}"
+      style="border-color: ${borderColor};">
       <h2
-        class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-${borderColor} before:rounded-full before:relative before:top-0.5"
-        style="border-color: ${borderColor};">
+        class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-gray-500 dark:before:border-white before:border-4 before:border-${borderColor} before:rounded-full before:relative before:top-0.5"
+        >
         <span class="ps-1">${todo.split(' ').slice(0, 3).join(' ')}</span>
       </h2>
-      <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
-      <span class="text-xs" style="color: ${textColor};">
+      <p class="dark:text-white text-sm mb-4">${todo}</p>
+      <span class="text-xs capitalize" style="color: ${textColor};">
         <i class="fa-solid fa-check"></i> ${status}
       </span>
     </div>
