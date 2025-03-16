@@ -31,24 +31,6 @@
         </svg>
       </button>
 
-      <form class="w-full lg:w-[300px] xl:w-xl mx-auto order-2 lg:order-1 mt-4 lg:mt-0">
-        <div class="flex w-full">
-          <div class="relative w-full">
-            <input type="search"
-              class="block p-2.5 xl:min-w-[350px] w-full z-20 text-sm text-gray-900 bg-gray-100 rounded-xl border-none focus:ring-main focus:border-2 focus:border-main dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-main"
-              placeholder="Search your task here..." required />
-            <button type="submit"
-              class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-main rounded-e-xl border transition-colors border-main hover:bg-main-dark focus:ring-4 focus:outline-none focus:ring-main-dark dark:bg-main dark:hover:bg-main dark:focus:ring-main-dark">
-              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-              </svg>
-              <span class="sr-only">Search</span>
-            </button>
-          </div>
-        </div>
-      </form>
 
       <div class="hidden w-full md:block md:w-auto order-1 lg:order-2" id="navbar-default">
         <ul
@@ -71,11 +53,19 @@
     </div>
   </nav>
 
+  <div class="group">
+    <button title="Change Theme"
+      class="theme animate-bounce group-hover:animate-none w-12 h-12 bg-main fixed z-50 rounded-full right-10 flex justify-center items-center shadow-theme hover:bg-cynlight transition duration-700">
+      <span class="sun"><i class="sun text-2xl fa-regular fa-sun text-white"></i></span>
+      <span class="moon hidden"><i class="hidden text-2xl fa-solid fa-moon text-white"></i></span>
+    </button>
+  </div>
+
   <header>
     <div
-      class="h-[50vh] w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto py-4 px-4 sm:px-16">
+      class="h-auto w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto py-4 px-4 sm:px-16">
       <div class="img h-full ">
-        <img class="object-cover h-full rounded-2xl" src="assets/home/headerbg.webp" alt="Plany thumbnail">
+        <img class="object-cover rounded-2xl w-full" src="assets/home/headerbg.webp" alt="Plany thumbnail">
       </div>
       <div
         class="grid grid-cols-1 sm:grid-cols-2 items-center w-full bg-white rounded-2xl shadow-sm dark:bg-gray-800 p-4 md:p-6">
@@ -101,6 +91,50 @@
       </div>
     </div>
   </header>
+  <main>
+    <section class="top-completed">
+      <div
+        class="w-full max-w-screen-3xl rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch justify-between mx-auto pb-5 px-4 sm:px-16">
+
+        <div class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
+          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-gray-400 fa-solid fa-calendar-check"></i> <span class="ps-1">Top Completed TODOs</span></h2>
+          <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="todo-card border-2 border-primarygreen shadow-card-done rounded-xl p-4 flex flex-col items-stretch justify-between">
+              <h2
+                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-primarygreen before:rounded-full before:relative before:top-0.5">
+                <span class="ps-1">Top Completed TODOs</span>
+              </h2>
+              <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
+              <span class="text-primarygreen dark:text-done text-xs"><i class="fa-solid fa-check"></i> Completed </span>
+            </div>
+          </div>
+        </div>
+        <div class="min-h-[200px] bg-gray-100 dark:bg-gray-800 rounded-3xl px-8 py-6">
+          <h2 class="dark:text-white text-xl mb-8"><i class="text-3xl text-gray-400 fa-solid fa-hourglass-half"></i> <span class="ps-1">Pending TODOs</span></h2>
+          <div class=" grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="todo-card border-2 border-secondary-dark rounded-xl p-4 shadow-pending flex flex-col items-stretch justify-between">
+              <h2
+                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-secondary before:rounded-full before:relative before:top-0.5">
+                <span class="ps-1">TODOs</span>
+              </h2>
+              <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
+              <span class="text-secondary dark:text-secondary-dark text-xs"><i class="fa-solid fa-check"></i> Pending </span>
+            </div>
+            <div class="todo-card border-2 border-secondary-dark rounded-xl p-4 shadow-pending">
+              <h2
+                class="mb-5 dark:text-white before:inline-block before:w-4 before:h-4 before:border-4 before:border-primarygreen before:rounded-full before:relative before:top-0.5">
+                <span class="ps-1">Top Completed TODOs</span>
+              </h2>
+              <p class="dark:text-white text-sm mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure </p>
+              <span class="text-primarygreen dark:text-done text-xs"><i class="fa-solid fa-check"></i> Completed </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>

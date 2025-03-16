@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
 @utility poppins-thin {
   font-family: "Poppins", sans-serif;
   font-weight: 100;
@@ -68,6 +72,9 @@
   --color-secondary: #FF6767;
   --color-secondary-dark: #c54f4f;
   --shadow-done: 0 4px 4px #027e4745;
+  --shadow-card-done: 0 0px 10px #027e4745;
+  --shadow-pending: 0 0px 10px #FF6767aa;
+  --shadow-theme: 0px 0px 15px #92f8e6;
 }
 
 body {
