@@ -7,6 +7,14 @@ const paginate = (page, limit = 10) => ({
   skip: (page - 1) * limit
 })
 
+const getAllTodos = async () => {
+  try {
+    const { todos } = await getTodos(MAX_LIMIT);
+    return todos;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
 
 const renderTodoRow = (todo) => `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
@@ -47,21 +55,24 @@ const renderTodos = (todos) => {
 
 
 const createTaskaty = (page = 1) => {
-  let currentPage = page;
-  let maxPage = 3;
-  const updateUI = (isLoading, total) => {
-    maxPage = Math.ceil(total / 10);
-    const taskatyBody = document.getElementById('taskaty');
-      if (!isLoading) {
-        taskatyBody.innerHTML = renderTodos(currentTodos);
-        addEditableEvents()
-        document.getElementById('total').innerHTML = total;
-        document.getElementById('current-page').innerHTML = currentPage;
-        document.getElementById('last-page').innerHTML = maxPage;
-        tfoot.classList.remove('hidden');
+    let currentPage = page;
+    let maxPage = 3;
+    let allTodos = [];
+    const updateUI = (isLoading, total) => {
+      maxPage = Math.ceil(total / 10);
+      console.log(maxPage);
+      
+      const taskatyBody = document.getElementById('taskaty');
+        if (!isLoading) {
+          taskatyBody.innerHTML = renderTodos(currentTodos);
+          addEditableEvents()
+          document.getElementById('total').innerHTML = total;
+          document.getElementById('current-page').innerHTML = currentPage;
+          document.getElementById('last-page').innerHTML = maxPage;
+          tfoot.classList.remove('hidden');
 
-        updatePaginationButtons();
-      }
+          updatePaginationButtons();
+        }
     };
 
     const updatePaginationButtons = () => {
@@ -80,13 +91,18 @@ const createTaskaty = (page = 1) => {
         nextBtn.disabled = false;
       }
     }
+
+    const getTodosForPgination = async () =>{
+      allTodos = await getAllTodos();
+    }
+
     const generateTodos = async () => {
       updateUI(true)
       const { limit, skip } = paginate(currentPage);
-      const { todos, total } = await getTodos(limit, skip);
-      currentTodos = searchResults ?? todos;
+      const todosToDisplay = allTodos.slice(skip, Math.min(skip + limit, allTodos.length))
+      currentTodos = searchResults ?? todosToDisplay;
       setItemsToLocalStorage(TODO_KEY, currentTodos)
-      updateUI(false, total);
+      updateUI(false, MAX_LIMIT);
     };
 
     const nextPage = () => {
@@ -107,13 +123,19 @@ const createTaskaty = (page = 1) => {
       nextPage,
       previousPage,
       generateTodos,
+      getTodosForPgination,
     }
   }
 
   const todoApp = createTaskaty();
-  todoApp.generateTodos();
 
+  const initApp = async () =>{
+    await todoApp.getTodosForPgination()
+    todoApp.generateTodos();
+  }
+  
 
+initApp()
   document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
   document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
 
@@ -157,14 +179,6 @@ const createTaskaty = (page = 1) => {
 
 
 
-  const getAllTodos = async () => {
-    try {
-      const { todos } = await getTodos(MAX_LIMIT);
-      return todos;
-    } catch (e) {
-      console.error(e.message);
-    }
-  }
 
 
   const search = async (event) => {
