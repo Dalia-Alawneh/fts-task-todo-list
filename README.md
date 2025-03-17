@@ -9,13 +9,13 @@
 🔗 [View Plany](https://plany-todo.netlify.app/)
 
 ## **📌 Features**
-✅ Fully **responsive design** for all devices 
-✅ Display **charts** for done and pending tasks 
-✅ TODOS **crud** operationes
-✅ **Mark TODOS** as done
-✅ **Inline Edit** got the todo cell
-✅ Add **calendar** for some tasks
-✅ **Dark and light** mode support
+✅ Fully **responsive design** for all devices  
+✅ Display **charts** for done and pending tasks  
+✅ TODOS **crud** operationes  
+✅ **Mark TODOS** as done  
+✅ **Inline Edit** got the todo cell  
+✅ Add **calendar** for some tasks  
+✅ **Dark and light** mode support  
 
 ## **🛠️ Technologies Used**  
 - **HTML5**, **CSS3**, **JavaScript**
