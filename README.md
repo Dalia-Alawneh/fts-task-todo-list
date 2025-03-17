@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://github.com/Dalia-Alawneh/fts-task-todo-list/blob/main/assets/plany-logo.webp?raw=true" alt="Plany Todo Logo" width="120" />
+</p>
+
+
 # **🗓️ Plany Todo**
 
 ## **🚀 Live Demo**
