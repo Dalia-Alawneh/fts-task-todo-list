@@ -55,166 +55,162 @@ const renderTodos = (todos) => {
 
 
 const createTaskaty = (page = 1) => {
-    let currentPage = page;
-    let maxPage = 3;
-    let allTodos = [];
-    const updateUI = (isLoading, total) => {
-      maxPage = Math.ceil(total / 10);
-      console.log(maxPage);
-      
-      const taskatyBody = document.getElementById('taskaty');
-        if (!isLoading) {
-          taskatyBody.innerHTML = renderTodos(currentTodos);
-          addEditableEvents()
-          document.getElementById('total').innerHTML = total;
-          document.getElementById('current-page').innerHTML = currentPage;
-          document.getElementById('last-page').innerHTML = maxPage;
-          tfoot.classList.remove('hidden');
+  let currentPage = page;
+  let maxPage = 3;
+  let allTodos = [];
+  const updateUI = (isLoading, total) => {
+    maxPage = Math.ceil(total / 10);
 
-          updatePaginationButtons();
-        }
-    };
-
-    const updatePaginationButtons = () => {
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-
-      if (currentPage <= 1) {
-        prevBtn.disabled = true;
-      } else {
-        prevBtn.disabled = false;
-      }
-
-      if (currentPage >= maxPage) {
-        nextBtn.disabled = true;
-      } else {
-        nextBtn.disabled = false;
-      }
-    }
-
-    const getTodosForPgination = async () =>{
-      allTodos = await getAllTodos();
-    }
-
-    const generateTodos = async () => {
-      updateUI(true)
-      const { limit, skip } = paginate(currentPage);
-      const todosToDisplay = allTodos.slice(skip, Math.min(skip + limit, allTodos.length))
-      currentTodos = searchResults ?? todosToDisplay;
-      setItemsToLocalStorage(TODO_KEY, currentTodos)
-      updateUI(false, MAX_LIMIT);
-    };
-
-    const nextPage = () => {
-      currentPage++;
-      if (currentPage <= maxPage) {
-        generateTodos()
-      }
-    }
-
-    const previousPage = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        generateTodos();
-      }
-    }
-
-    return {
-      nextPage,
-      previousPage,
-      generateTodos,
-      getTodosForPgination,
-    }
-  }
-
-  const todoApp = createTaskaty();
-
-  const initApp = async () =>{
-    await todoApp.getTodosForPgination()
-    todoApp.generateTodos();
-  }
-  
-
-initApp()
-  document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
-  document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
-
-  const modal = document.getElementById('crud-modal');
-
-  const toggleClasses = (el, toAdd = [], toRemove = []) => {
-    el.classList.remove(...toRemove);
-    el.classList.add(...toAdd);
-  };
-
-  const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
-  const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
-
-  document.getElementById('add-task').onclick = () => {
-    modal.setAttribute('aria-hidden', 'false');
-    showModal()
-  }
-
-  document.getElementById('close-modal').onclick = () => {
-    modal.setAttribute('aria-hidden', 'true');
-    hideModal()
-  }
-
-  const generateUsers = async () => {
-    const { users } = await getUsers();
-    document.getElementById('user').innerHTML = renderUsers(users);
-  }
-
-  const renderUsers = (users) => {
-    const renderOption = ({ id, firstName, lastName }) => {
-      return `<option value="${id}">${firstName} ${lastName}</option>`
-    }
-    if (!users || users.length === 0) {
-      return `<option disabled selected>No users found</option>`
-    } else {
-      return users.map(user => renderOption(user)).join('')
-    }
-  }
-
-  generateUsers()
-
-
-
-
-
-  const search = async (event) => {
-    const value = event.target?.value.trim();
-    if (value) {
-      searchResults = currentTodos.filter((todo) =>
-        todo.todo.toLowerCase().includes(value.toLowerCase())
-      );
-    } else {
-      searchResults = null;
-    }
-    currentPage = 1;
-    todoApp.generateTodos();
-  };
-
-  const debounce = (func, delay = 500) => {
-    let currentTimeout
-
-    return function (args) {
-      clearTimeout(currentTimeout)
-      currentTimeout = setTimeout(() => {
-        func(args)
-      }, delay)
-    }
-  }
-
-
-  const inputDebounce = debounce((e) => {
-    if (e.target.value.trim() === '') {
+    const taskatyBody = document.getElementById('taskaty');
+    if (!isLoading) {
+      taskatyBody.innerHTML = renderTodos(currentTodos);
+      addEditableEvents()
+      document.getElementById('total').innerHTML = total;
+      document.getElementById('current-page').innerHTML = currentPage;
+      document.getElementById('last-page').innerHTML = maxPage;
       tfoot.classList.remove('hidden');
-    } else {
-      tfoot.classList.add('hidden');
-    }
-    search(e);
-  }, 500);
 
-  document.querySelector('#search').addEventListener('input', (e) => {
-    inputDebounce(e);
-  });
+      updatePaginationButtons();
+    }
+  };
+
+  const updatePaginationButtons = () => {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    if (currentPage <= 1) {
+      prevBtn.disabled = true;
+    } else {
+      prevBtn.disabled = false;
+    }
+
+    if (currentPage >= maxPage) {
+      nextBtn.disabled = true;
+    } else {
+      nextBtn.disabled = false;
+    }
+  }
+
+  const getTodosForPgination = async () => {
+    allTodos = await getAllTodos();
+  }
+
+  const generateTodos = async () => {
+    updateUI(true)
+    const { limit, skip } = paginate(currentPage);
+    const todos = searchResults ?? allTodos;
+    
+    currentTodos = todos.slice(skip, Math.min(skip + limit, allTodos.length))
+    setItemsToLocalStorage(TODO_KEY, currentTodos)
+    updateUI(false, todos.length);
+  };
+
+  const nextPage = () => {
+    console.log(searchResults);
+    
+    currentPage++;
+    if (currentPage <= maxPage) {
+      generateTodos()
+    }
+  }
+
+  const previousPage = () => {
+    if (currentPage > 1) {
+      currentPage--;
+      generateTodos();
+    }
+  }
+
+  return {
+    nextPage,
+    previousPage,
+    generateTodos,
+    getTodosForPgination,
+    updateUI,
+  }
+}
+
+const todoApp = createTaskaty();
+
+const initApp = async () => {
+  await todoApp.getTodosForPgination()
+  todoApp.generateTodos();
+}
+
+
+initApp();
+
+document.getElementById('next-btn').addEventListener('click', () => todoApp.nextPage());
+document.getElementById('prev-btn').addEventListener('click', () => todoApp.previousPage());
+
+const modal = document.getElementById('crud-modal');
+
+const toggleClasses = (el, toAdd = [], toRemove = []) => {
+  el.classList.remove(...toRemove);
+  el.classList.add(...toAdd);
+};
+
+const showModal = () => toggleClasses(modal, ['flex'], ['hidden']);
+const hideModal = () => toggleClasses(modal, ['hidden'], ['flex']);
+
+document.getElementById('add-task').onclick = () => {
+  modal.setAttribute('aria-hidden', 'false');
+  showModal()
+}
+
+document.getElementById('close-modal').onclick = () => {
+  modal.setAttribute('aria-hidden', 'true');
+  hideModal()
+}
+
+const generateUsers = async () => {
+  const { users } = await getUsers();
+  document.getElementById('user').innerHTML = renderUsers(users);
+}
+
+const renderUsers = (users) => {
+  const renderOption = ({ id, firstName, lastName }) => {
+    return `<option value="${id}">${firstName} ${lastName}</option>`
+  }
+  if (!users || users.length === 0) {
+    return `<option disabled selected>No users found</option>`
+  } else {
+    return users.map(user => renderOption(user)).join('')
+  }
+}
+
+generateUsers()
+
+
+const search = async (event) => {
+  const value = event.target?.value.trim();
+  const allTodos = await getAllTodos();
+  if (value) {
+    searchResults = allTodos.filter((todo) =>
+      todo.todo.toLowerCase().includes(value.toLowerCase())
+    );
+  } else {
+    searchResults = null;
+  }
+  currentPage = 1;
+  todoApp.generateTodos();
+  todoApp.updateUI(false, searchResults.length);
+};
+
+const debounce = (func, delay = 500) => {
+  let currentTimeout
+
+  return function (args) {
+    clearTimeout(currentTimeout)
+    currentTimeout = setTimeout(() => {
+      func(args)
+    }, delay)
+  }
+}
+
+
+const inputDebounce = debounce((e) => search(e), 500);
+
+document.querySelector('#search').addEventListener('input', (e) => {
+  inputDebounce(e);
+});
