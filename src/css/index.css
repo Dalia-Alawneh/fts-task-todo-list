@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
-
 @custom-variant dark (&:where(.dark, .dark *));
-
 
 @utility poppins-thin {
   font-family: "Poppins", sans-serif;
@@ -59,47 +57,54 @@
   font-style: normal;
 }
 
-
 @theme {
-  --color-main: #8FBCB4;
-  --color-cynlight: #4EE9E0;
-  --color-primarygreen: #027E47;
+  --color-main: #8fbcb4;
+  --color-cynlight: #4ee9e0;
+  --color-primarygreen: #027e47;
   --color-done-light: #1aa26536;
   --color-done: #1aa265;
   --color-pending: #fc5757;
   --color-pending-light: #ff67673d;
   --color-pending-dark: #c54f4f;
   --color-main-dark: #3c504c;
-  --color-secondary: #FF6767;
+  --color-secondary: #ff6767;
   --color-secondary-dark: #c54f4f;
   --shadow-done: 0 4px 4px #027e4745;
   --shadow-card-done: 0 0px 10px #027e4745;
-  --shadow-pending: 0 0px 10px #FF6767aa;
+  --shadow-pending: 0 0px 10px #ff6767aa;
   --shadow-theme: 0px 0px 15px #92f8e6;
 }
 
 body {
-  @apply poppins-regular
+  @apply poppins-regular;
 }
 
 a {
-  @apply poppins-medium text-base
+  @apply poppins-medium text-base;
 }
 
 .link-styled {
-  @apply block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-main md:p-0 dark:text-white md:dark:hover:text-main dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent
+  @apply block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-main md:p-0 dark:text-white md:dark:hover:text-main dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent dark:hover:text-white md:dark:hover:bg-transparent;
 }
 
 .secondary-btn {
-  @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors
+  @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors;
 }
 
 .btn-outlined-secondary {
-  @apply border border-secondary rounded-lg px-3 py-2 text-secondary hover:bg-secondary hover:text-white transition-colors duration-300
+  @apply border border-secondary rounded-lg px-3 py-2 text-secondary hover:bg-secondary hover:text-white transition-colors duration-300;
 }
 
-.pagination-btn{
-  @apply transition flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-main hover:bg-main-dark dark:bg-main dark:hover:bg-main-dark dark:hover:text-white disabled:bg-gray-400
+.pagination-btn {
+  @apply transition flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-main hover:bg-main-dark dark:bg-main dark:hover:bg-main-dark dark:hover:text-white disabled:bg-gray-400;
+}
+
+th {
+  @apply pb-3 border-b border-gray-200 text-gray-900 dark:text-white;
+}
+
+td{
+  @apply text-gray-900
 }
 
 .loader {
@@ -108,16 +113,18 @@ a {
   aspect-ratio: 1;
   border-radius: 50%;
   background: #25b09b;
-  --_m: 
-    conic-gradient(#0000 10%,#000),
-    linear-gradient(#000 0 0) content-box;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
   -webkit-mask: var(--_m);
-          mask: var(--_m);
+  mask: var(--_m);
   -webkit-mask-composite: source-out;
-          mask-composite: subtract;
+  mask-composite: subtract;
   animation: l3 1s infinite linear;
 }
-@keyframes l3 {to{transform: rotate(1turn)}}
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -128,7 +135,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #8FBCB4;
+  background: #8fbcb4;
 }
 
 ::-webkit-scrollbar-thumb:hover {

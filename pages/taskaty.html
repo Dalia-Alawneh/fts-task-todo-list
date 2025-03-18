@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../dist/output.css">
 </head>
 
-<body class="dark:bg-gray-900">
+<body class="dark:bg-gray-900 bg-white">
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-3xl flex flex-wrap items-center justify-between mx-auto py-4 px-4 sm:px-16">
       <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -63,7 +63,7 @@
           <li class="flex items-center gap-8 ms-3 md:ms-0">
             <a href="calendar.html" class="secondary-btn"><i class="fa-regular fa-calendar-days"></i></a>
             <div class="flex flex-col items-stretch">
-              <span id="day" class="dark:text-white">..</span>
+              <span id="day" class="dark:text-white text-gray-900">..</span>
               <span class="text-secondary text-sm" id="date">...</span>
             </div>
           </li>
@@ -80,7 +80,7 @@
 
   <header>
     <div class="max-w-screen-3xl rounded-3xl mx-auto py-10 px-4 sm:px-16 flex justify-between items-center">
-      <h1 class="text-xl sm:text-3xl font-semibold capitalize dark:text-white">start your day & be productive✌️</h1>
+      <h1 class="text-xl sm:text-3xl font-semibold capitalize dark:text-white text-gray-900">start your day & be productive✌️</h1>
       <button type="button" id="add-task" data-modal-target="crud-modal" data-modal-toggle="crud-modal"
         class="btn-outlined-secondary">
         <i class="fa-solid fa-plus"></i> Add Task</button>
@@ -149,11 +149,11 @@
         <table id="taskaty-table" class="w-full border-separate border-spacing-y-3 min-w-[600px]">
           <thead>
             <tr>
-              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">ID</th>
-              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">TODO Description</th>
-              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">User ID</th>
-              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">Status</th>
-              <th scope="col" class="pb-3 border-b border-gray-200 dark:text-white">Actions</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 text-gray-900 dark:text-white">ID</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 text-gray-900 dark:text-white">TODO Description</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 text-gray-900 dark:text-white">User ID</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 text-gray-900 dark:text-white">Status</th>
+              <th scope="col" class="pb-3 border-b border-gray-200 text-gray-900 dark:text-white">Actions</th>
             </tr>
           </thead>
           <tbody id="taskaty" class="min-h-[580px]">
