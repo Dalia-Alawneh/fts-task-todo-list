@@ -106,8 +106,6 @@ const createTaskaty = (page = 1) => {
   };
 
   const nextPage = () => {
-    console.log(searchResults);
-    
     currentPage++;
     if (currentPage <= maxPage) {
       generateTodos()
