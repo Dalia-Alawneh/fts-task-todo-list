@@ -88,6 +88,7 @@ const updateTodoItem = async (id, updatedTodo, successMessage) => {
         type: 'success'
       });
     }
+    return response;
   } catch (e) {
     new Toast({
       message: e.message || 'Something went wrong!',
@@ -105,8 +106,8 @@ const updateTodoStatus = async (status, id) => {
   updateTodoItem(id, { completed: status }, message);
 }
 
-const updateTodoDescription = (description, id) => {
-  updateTodoItem(id, { todo: description }, '✅ TODO Updated!');
+const updateTodoData = async (feild, value, id) => {
+  return await updateTodoItem(id, { [feild]: value }, '✅ TODO Updated!');
 };
 
 const deleteTodoItem = async (id) => {
@@ -137,7 +138,7 @@ const addEditableEvents = () => {
     const span = td.querySelector('.editable-text');
     const input = td.querySelector('.editable-input');
     const id = Number(input.dataset.id);
-
+    const feildToUpdate = input.dataset.feild;
     if (!span || !input) return;
 
     span.addEventListener('dblclick', () => {
@@ -149,8 +150,8 @@ const addEditableEvents = () => {
     const saveChanges = async () => {
       const newValue = input.value.trim();
       if (newValue !== '') {
-        updateTodoDescription(newValue, id);
-        span.textContent = newValue;
+        const updatedData = await updateTodoData(feildToUpdate, newValue, id);
+        span.textContent = renderUserName(allUsers, updatedData.userId);
       }
       input.classList.add('hidden');
       span.classList.remove('hidden');

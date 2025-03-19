@@ -59,7 +59,7 @@ const deleteTodo = async (id) => {
 
 const getUsers = async () => {
   try {
-    const response = await fetch(`${API_URL}/users?limit=10`);
+    const response = await fetch(`${API_URL}/users?limit=208`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     return await response.json();

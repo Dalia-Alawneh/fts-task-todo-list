@@ -1,5 +1,6 @@
 let searchResults = null;
 let currentTodos = [];
+let allUsers = [];
 const tfoot = document.querySelector('tfoot')
 
 const paginate = (page, limit = 10) => ({
@@ -19,10 +20,20 @@ const getAllTodos = async () => {
 const renderTodoRow = (todo) => `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
     <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl text-gray-900">${todo.id}</td>
-    <td class="editable-td py-3 text-center max-h-[50px] truncate w-[900px] text-gray-900 dark:text-white ${todo.completed ? 'line-through' : ''}"><span class="editable-text border-2 border-transparent text-gray-900 dark:text-white">${todo.todo}</span>
-      <input data-id="${todo.id}" class="editable-input text-gray-900 hidden w-fit h-full text-center p-2 border-2 rounded border-transparent focus:outline-none focus:border-2 focus:border-main focus:ring-main" value="${todo.todo}" size="${todo.todo.length}" />
+    <td class="editable-td py-3 text-center max-h-[50px] truncate w-[900px] text-gray-900 dark:text-white ${todo.completed ? 'line-through' : ''}">
+      <span class="editable-text border-2 border-transparent text-gray-900 dark:text-white">${todo.todo}</span>
+      <input data-feild="todo" data-id="${todo.id}" class="editable-input text-gray-900 hidden w-fit h-full text-center p-2 border-2 rounded border-transparent focus:outline-none focus:border-2 focus:border-main focus:ring-main" value="${todo.todo}" size="${todo.todo.length}" />
     </td>
-    <td class="py-3 text-center min-w-[100px] dark:text-white text-gray-900">${todo.userId}</td>
+    <td class="editable-td py-3 text-center min-w-[100px] dark:text-white text-gray-900">
+      <select id="user" data-feild="userId" data-id="${todo.id}"
+        class="editable-input hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-main focus:border-main w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-main dark:focus:border-main">
+        ${renderUsers(allUsers, todo.userId)}
+      </select>
+    
+      <span class="editable-text">
+      ${renderUserName(allUsers, todo.userId)}
+      </span>
+    </td>
     <td class="py-3 text-center">
       ${todo.completed
     ? '<span class="bg-done-light py-1 px-2 rounded-full text-[12px] text-done">Completed</span>'
@@ -99,7 +110,7 @@ const createTaskaty = (page = 1) => {
     updateUI(true)
     const { limit, skip } = paginate(currentPage);
     const todos = searchResults ?? allTodos;
-    
+
     currentTodos = todos.slice(skip, Math.min(skip + limit, allTodos.length))
     setItemsToLocalStorage(TODO_KEY, currentTodos)
     updateUI(false, todos.length);
@@ -128,10 +139,19 @@ const createTaskaty = (page = 1) => {
   }
 }
 
+const generateUsers = async () => {
+  const { users } = await getUsers();
+  allUsers = users;
+  document.getElementById('user').innerHTML = renderUsers(users);
+}
+
+
 const todoApp = createTaskaty();
 
 const initApp = async () => {
   await todoApp.getTodosForPgination()
+  await generateUsers();
+
   todoApp.generateTodos();
 }
 
@@ -161,24 +181,24 @@ document.getElementById('close-modal').onclick = () => {
   hideModal()
 }
 
-const generateUsers = async () => {
-  const { users } = await getUsers();
-  document.getElementById('user').innerHTML = renderUsers(users);
-}
 
-const renderUsers = (users) => {
+const renderUsers = (users, selectedId = null) => {
   const renderOption = ({ id, firstName, lastName }) => {
-    return `<option value="${id}">${firstName} ${lastName}</option>`
+    const isSelected = id === selectedId ? 'selected' : '';
+    return `<option value="${id}" ${isSelected}>${firstName} ${lastName}</option>`;
   }
+
   if (!users || users.length === 0) {
-    return `<option disabled selected>No users found</option>`
+    return `<option disabled selected>No users found</option>`;
   } else {
-    return users.map(user => renderOption(user)).join('')
+    return users.map(user => renderOption(user)).join('');
   }
 }
 
-generateUsers()
-
+const renderUserName = (users, id) => {
+  const user = users.find(user => user.id == Number(id));
+  return `${user?.firstName} ${user?.lastName}`
+}
 
 const search = async (event) => {
   const value = event.target?.value.trim();
