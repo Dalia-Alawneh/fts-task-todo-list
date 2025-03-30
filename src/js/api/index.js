@@ -68,3 +68,18 @@ const getUsers = async () => {
     throw error;
   }
 }
+
+const showTopTodos = async (status) => {
+  const { todos } = await getTodos(8, 244);
+  topTodos = todos.filter(todo => todo.completed === status)
+  return topTodos;
+}
+
+const getAllTodos = async () => {
+  try {
+    const { todos } = await getTodos(MAX_LIMIT);
+    return todos;
+  } catch (e) {
+    console.error(e.message);
+  }
+}

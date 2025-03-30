@@ -60,12 +60,13 @@
 @theme {
   --color-main: #8fbcb4;
   --color-cynlight: #4ee9e0;
+  --color-baby-blue: #44bef2;
   --color-primarygreen: #027e47;
   --color-done-light: #1aa26536;
   --color-done: #1aa265;
-  --color-pending: #fc5757;
-  --color-pending-light: #ff67673d;
-  --color-pending-dark: #c54f4f;
+  --color-pending: #d6963f;
+  --color-pending-light: #fad6a5aa;
+  --color-pending-dark: #d6963f4f;
   --color-main-dark: #3c504c;
   --color-secondary: #ff6767;
   --color-secondary-dark: #c54f4f;
@@ -91,8 +92,8 @@ a {
   @apply bg-secondary block py-2 px-3 rounded-lg text-white hover:bg-secondary-dark transition-colors;
 }
 
-.btn-outlined-secondary {
-  @apply border border-secondary rounded-lg px-3 py-2 text-secondary hover:bg-secondary hover:text-white transition-colors duration-300;
+.btn-outlined-baby-blue {
+  @apply border border-baby-blue rounded-lg px-3 py-2 text-baby-blue hover:bg-baby-blue hover:text-white transition-colors duration-300;
 }
 
 .pagination-btn {

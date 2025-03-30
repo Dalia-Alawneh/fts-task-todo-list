@@ -35,6 +35,8 @@ addForm.onsubmit = async (e) => {
       message: todoValiadation.message,
       type: 'danger'
     });
+    saveTask.innerHTML = 'Save Task';
+
     return;
   }
 

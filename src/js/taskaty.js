@@ -8,21 +8,17 @@ const paginate = (page, limit = 10) => ({
   skip: (page - 1) * limit
 })
 
-const getAllTodos = async () => {
-  try {
-    const { todos } = await getTodos(MAX_LIMIT);
-    return todos;
-  } catch (e) {
-    console.error(e.message);
-  }
-}
 
 const renderTodoRow = (todo) => `
   <tr class="odd:bg-gray-100 even:bg-gray-50 dark:odd:bg-gray-700 dark:even:bg-gray-800 rounded-2xl last:mb-0">
-    <td class="border-s-[6px] dark:text-white ${todo.completed ? 'border-primarygreen' : 'border-secondary'} py-3 text-center rounded-s-2xl text-gray-900">${todo.id}</td>
-    <td class="editable-td py-3 text-center max-h-[50px] truncate w-[900px] text-gray-900 dark:text-white ${todo.completed ? 'line-through' : ''}">
-      <span class="editable-text border-2 border-transparent text-gray-900 dark:text-white">${todo.todo}</span>
-      <input data-feild="todo" data-id="${todo.id}" class="editable-input text-gray-900 hidden w-fit h-full text-center p-2 border-2 rounded border-transparent focus:outline-none focus:border-2 focus:border-main focus:ring-main" value="${todo.todo}" size="${todo.todo.length}" />
+    <td class="border-s-[6px] ${todo.completed ? 'border-primarygreen' : 'border-pending-light dark:border-pending-dark'} py-3 text-center rounded-s-2xl ">
+    <span class="text-gray-900 dark:text-white">
+    ${todo.id}
+    </span>
+    </td>
+    <td class="editable-td py-3 text-center max-h-[50px] truncate w-[900px] text-gray-900 dark:text-white">
+      <span class="editable-text border-2 border-transparent text-gray-900 dark:text-white ${todo.completed ? 'line-through dark:line-through ' : ''}">${todo.todo}</span>
+      <input data-feild="todo" data-id="${todo.id}" class="editable-input text-gray-900 dark:text-white hidden w-fit h-full text-center p-2 border-2 rounded border-transparent focus:outline-none focus:border-2 focus:border-main focus:ring-main" value="${todo.todo}" size="${todo.todo.length}" />
     </td>
     <td class="editable-td py-3 text-center min-w-[100px] dark:text-white text-gray-900">
       <select id="user" data-feild="userId" data-id="${todo.id}"
@@ -30,14 +26,14 @@ const renderTodoRow = (todo) => `
         ${renderUsers(allUsers, todo.userId)}
       </select>
     
-      <span class="editable-text">
+      <span class="editable-text text-gray-900 dark:text-white">
       ${renderUserName(allUsers, todo.userId)}
       </span>
     </td>
     <td class="py-3 text-center">
       ${todo.completed
     ? '<span class="bg-done-light py-1 px-2 rounded-full text-[12px] text-done">Completed</span>'
-    : '<span class="bg-pending-light py-1 px-2 rounded-full text-[12px] text-pending">Pending</span>'}
+    : '<span class="bg-pending-light dark:bg-pending-dark py-1 px-2 rounded-full text-[12px] text-pending">Pending</span>'}
     </td>
     <td class="py-3 text-center rounded-e-2xl gap-8 items-center justify-center">
       <button class="me-8" onclick="showConfirmationModal(${todo.id})">
@@ -69,7 +65,7 @@ const createTaskaty = (page = 1) => {
   let currentPage = page;
   let maxPage = 3;
   let allTodos = [];
-  const updateUI = (isLoading, total) => {
+  const renderTasksPage = (isLoading, total) => {
     maxPage = Math.ceil(total / 10);
 
     const taskatyBody = document.getElementById('taskaty');
@@ -81,11 +77,11 @@ const createTaskaty = (page = 1) => {
       document.getElementById('last-page').innerHTML = maxPage;
       tfoot.classList.remove('hidden');
 
-      updatePaginationButtons();
+      updateDisable();
     }
   };
 
-  const updatePaginationButtons = () => {
+  const updateDisable = () => {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
 
@@ -107,13 +103,13 @@ const createTaskaty = (page = 1) => {
   }
 
   const generateTodos = async () => {
-    updateUI(true)
+    renderTasksPage(true)
     const { limit, skip } = paginate(currentPage);
     const todos = searchResults ?? allTodos;
 
     currentTodos = todos.slice(skip, Math.min(skip + limit, allTodos.length))
     setItemsToLocalStorage(TODO_KEY, currentTodos)
-    updateUI(false, todos.length);
+    renderTasksPage(false, todos.length);
   };
 
   const nextPage = () => {
@@ -135,7 +131,7 @@ const createTaskaty = (page = 1) => {
     previousPage,
     generateTodos,
     getTodosForPgination,
-    updateUI,
+    updateUI: renderTasksPage,
   }
 }
 
@@ -201,7 +197,7 @@ const renderUserName = (users, id) => {
 }
 
 const search = async (event) => {
-  const value = event.target?.value.trim();
+  const value = event.target?.value;
   const allTodos = await getAllTodos();
   if (value) {
     searchResults = allTodos.filter((todo) =>
